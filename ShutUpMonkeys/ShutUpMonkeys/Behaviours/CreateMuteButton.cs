@@ -21,18 +21,24 @@ namespace ShutUpMonkeys.Behaviours
 
             Main.MuteButton.AddComponent<MuteTrigger>();
 
-            if (Main.MuteButton.GetOrAddComponent<MeshRenderer>() != null)
+            var renderer = Main.MuteButton.GetOrAddComponent<MeshRenderer>();
+            if (renderer != null)
             {
-                Main.MuteButton.GetOrAddComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                Main.MuteButton.GetOrAddComponent<MeshRenderer>().material.color = Color.white;
+                var shader = Shader.Find("GorillaTag/UberShader") ?? Shader.Find("Standard");
+                renderer.material.shader = shader;
+                renderer.material.color = Color.white;
             }
 
             Main.IsLobbyMuted = false;
-        }); 
-        
+        });
+
         internal class MuteTrigger : GorillaPressableButton
         {
-            public override void ButtonActivationWithHand(bool isLeftHand) => Main.IsLobbyMuted = !Main.IsLobbyMuted;
+            public override void ButtonActivationWithHand(bool isLeftHand)
+            {
+                Main.IsLobbyMuted = !Main.IsLobbyMuted;
+                Main.UpdateMuteState(null, true);
+            }
         }
     }
 }
