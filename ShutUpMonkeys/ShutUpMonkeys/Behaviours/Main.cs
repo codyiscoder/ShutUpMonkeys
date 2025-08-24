@@ -7,49 +7,44 @@ namespace ShutUpMonkeys.Behaviours
 {
     internal class Main : MonoBehaviour
     {
-        public static bool IsLobbyMuted;
+        public static bool IsLobbyMuted = false;
         public static GameObject MuteButton;
 
         private void Start() => gameObject.AddComponent<CreateMuteButton>();
 
         private void Update()
         {
-            if (MuteButton != null)
-                MuteButton.GetOrAddComponent<MeshRenderer>().material.color = IsLobbyMuted ? Color.red : Color.white;
+            if (MuteButton == null) return;
 
-            if (MuteButton != null)
-                MuteButton.SetActive(NetworkSystem.Instance.InRoom);
+            MuteButton.GetOrAddComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+            MuteButton.GetOrAddComponent<MeshRenderer>().material.color = IsLobbyMuted ? Color.red : Color.white;
         }
 
-        public static void UpdateMuteState(Player p = null, bool muteEveryone = false)
+        public static void MuteEveryone()
         {
-            if (GorillaScoreboardTotalUpdater.allScoreboardLines == null) return;
-
-            if (muteEveryone)
+            foreach (var l in GorillaScoreboardTotalUpdater.allScoreboardLines)
             {
-                foreach (var line in GorillaScoreboardTotalUpdater.allScoreboardLines)
-                {
-                    line.PressButton(IsLobbyMuted, GorillaPlayerLineButton.ButtonType.Mute);
-                    if (line.muteButton != null)
-                        line.muteButton.isOn = IsLobbyMuted;
-                }
-                return;
-            }
-
-            foreach (var line in GorillaScoreboardTotalUpdater.allScoreboardLines)
-            {
-                if (line.linePlayer.UserId == p.UserId)
-                {
-                    line.PressButton(IsLobbyMuted, GorillaPlayerLineButton.ButtonType.Mute);
-                    if (line.muteButton != null)
-                        line.muteButton.isOn = IsLobbyMuted;
-                }
+                l.muteButton.isOn = IsLobbyMuted;
+                l.PressButton(IsLobbyMuted, GorillaPlayerLineButton.ButtonType.Mute);
             }
         }
     }
 
-    public class PlayerEnter : MonoBehaviourPunCallbacks
+    public class PlayerStuff : MonoBehaviourPunCallbacks
     {
-        public override void OnPlayerEnteredRoom(Player newPlayer) => Main.UpdateMuteState(newPlayer);
+        public override void OnJoinedRoom() => Main.MuteEveryone();
+
+        public override void OnPlayerEnteredRoom(Player p)
+        {
+            // terrible way to do this but 🤫
+            foreach (var l in GorillaScoreboardTotalUpdater.allScoreboardLines)
+            {
+                if (l.linePlayer.UserId == p.UserId)
+                {
+                    l.muteButton.isOn = Main.IsLobbyMuted;
+                    l.PressButton(Main.IsLobbyMuted, GorillaPlayerLineButton.ButtonType.Mute);
+                }
+            }
+        }
     }
 }

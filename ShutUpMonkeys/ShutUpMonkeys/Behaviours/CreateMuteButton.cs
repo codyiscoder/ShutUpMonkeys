@@ -1,5 +1,4 @@
-﻿using GorillaExtensions;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ShutUpMonkeys.Behaviours
 {
@@ -7,29 +6,17 @@ namespace ShutUpMonkeys.Behaviours
     {
         private void Awake() => GorillaTagger.OnPlayerSpawned(() =>
         {
-            if (Main.MuteButton != null) return;
-
             Main.MuteButton = GameObject.CreatePrimitive(PrimitiveType.Cube);
             Main.MuteButton.name = "MuteButton";
             Main.MuteButton.layer = 18;
+
             Main.MuteButton.transform.localScale = new Vector3(0.115f, 0.115f, 0.07f);
             Main.MuteButton.transform.position = new Vector3(-60.3478f, 4.7193f, -61.0687f);
             Main.MuteButton.transform.rotation = Quaternion.Euler(8.4964f, 31.8166f, 0f);
 
-            if (Main.MuteButton.TryGetComponent<Collider>(out var collider))
-                collider.isTrigger = true;
-
+            Main.MuteButton.GetComponent<BoxCollider>().isTrigger = true;
             Main.MuteButton.AddComponent<MuteTrigger>();
-
-            var renderer = Main.MuteButton.GetOrAddComponent<MeshRenderer>();
-            if (renderer != null)
-            {
-                var shader = Shader.Find("GorillaTag/UberShader") ?? Shader.Find("Standard");
-                renderer.material.shader = shader;
-                renderer.material.color = Color.white;
-            }
-
-            Main.IsLobbyMuted = false;
+            Main.MuteButton.AddComponent<PlayerStuff>();
         });
 
         internal class MuteTrigger : GorillaPressableButton
@@ -37,7 +24,7 @@ namespace ShutUpMonkeys.Behaviours
             public override void ButtonActivationWithHand(bool isLeftHand)
             {
                 Main.IsLobbyMuted = !Main.IsLobbyMuted;
-                Main.UpdateMuteState(null, true);
+                Main.MuteEveryone();
             }
         }
     }
