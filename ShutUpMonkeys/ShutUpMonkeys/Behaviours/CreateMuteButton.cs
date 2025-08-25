@@ -4,7 +4,7 @@ namespace ShutUpMonkeys.Behaviours
 {
     internal class CreateMuteButton : MonoBehaviour
     {
-        private void Awake() => GorillaTagger.OnPlayerSpawned(() =>
+        private void Start() => GorillaTagger.OnPlayerSpawned(() =>
         {
             Main.MuteButton = GameObject.CreatePrimitive(PrimitiveType.Cube);
             Main.MuteButton.name = "MuteButton";

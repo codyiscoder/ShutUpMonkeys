@@ -13,7 +13,7 @@ namespace ShutUpMonkeys
         private void Start()
         {
             Hashtable prop = new Hashtable();
-            prop.Add("cody likes burritos", $"{Constants.NAME}v{Constants.VERS}");
+            prop.Add("cody likes burritos", $"{Constants.NAME}v{Constants.VERS}"); // i js like burritos bro
             PhotonNetwork.LocalPlayer.SetCustomProperties(prop);
         }
     }

@@ -43,6 +43,7 @@ namespace ShutUpMonkeys.Behaviours
                 {
                     l.muteButton.isOn = Main.IsLobbyMuted;
                     l.PressButton(Main.IsLobbyMuted, GorillaPlayerLineButton.ButtonType.Mute);
+                    return;
                 }
             }
         }
