@@ -1,27 +1,48 @@
 ﻿using BepInEx;
-using ExitGames.Client.Photon;
-using Photon.Pun;
-using ShutUpMonkeys.Behaviours;
+using GorillaNetworking;
+using HarmonyLib;
+using TMPro;
+using UnityEngine;
 
 namespace ShutUpMonkeys
 {
     [BepInPlugin(Constants.GUID, Constants.NAME, Constants.VERS)]
     public class Plugin : BaseUnityPlugin
     {
-        private void Awake() => gameObject.AddComponent<Main>();
+        public static bool IsLobbyMuted = false;
+        public static GameObject MuteButton;
+        public static TextMeshPro buttonText;
 
-        private void Start()
+        public static bool isOK => 
+            GorillaComputer.instance.currentState != GorillaComputer.ComputerState.Color &&
+            GorillaComputer.instance.currentState != GorillaComputer.ComputerState.Mic &&
+            GorillaComputer.instance.currentState != GorillaComputer.ComputerState.Turn &&
+            GorillaComputer.instance.currentState != GorillaComputer.ComputerState.Queue;
+
+        private void Awake()
         {
-            Hashtable prop = new Hashtable();
-            prop.Add("cody likes burritos", $"{Constants.NAME}v{Constants.VERS}"); // i js like burritos bro
-            PhotonNetwork.LocalPlayer.SetCustomProperties(prop);
-        }
-    }
+            var harmony = new Harmony(Constants.GUID);
+            harmony.PatchAll();
 
-    internal static class Constants
-    {
-        public const string GUID = "net.cody.shutupmonkeys";
-        public const string NAME = "ShutUpMonkeys";
-        public const string VERS = "1.1.0";
+            GorillaTagger.OnPlayerSpawned(() =>
+            {
+                MuteButton = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/option 3/");
+                buttonText = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/option3/").GetComponent<TextMeshPro>();
+            });
+        }
+
+        private void Update()
+        {
+            buttonText.text = isOK ? IsLobbyMuted ? "MUTED" : "UNMUTED" : "OPTION 3";
+        }
+
+        public static void DoTheThing()
+        {
+            foreach (var l in GorillaScoreboardTotalUpdater.allScoreboardLines)
+            {
+                l.muteButton.isOn = IsLobbyMuted;
+                l.PressButton(IsLobbyMuted, GorillaPlayerLineButton.ButtonType.Mute);
+            }
+        }
     }
 }

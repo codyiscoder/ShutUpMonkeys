@@ -3,9 +3,26 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<Nullable>disable</Nullable>
+		<SignAssembly>False</SignAssembly>
+		<Company>codyiscoder</Company>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DebugType>none</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <DebugType>none</DebugType>
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="BepInEx.AssemblyPublicizer" Version="0.4.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="0Harmony">
+	    <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\core\0Harmony.dll</HintPath>
+	  </Reference>
 	  <Reference Include="Assembly-CSharp">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Assembly-CSharp.dll</HintPath>
 	  </Reference>
@@ -30,20 +47,17 @@
 	  <Reference Include="BepInEx">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\core\BepInEx.dll</HintPath>
 	  </Reference>
-	  <Reference Include="Cinemachine">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Cinemachine.dll</HintPath>
+	  <Reference Include="BepInEx.Harmony">
+	    <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\core\BepInEx.Harmony.dll</HintPath>
+	  </Reference>
+	  <Reference Include="BepInEx.Preloader">
+	    <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\core\BepInEx.Preloader.dll</HintPath>
 	  </Reference>
 	  <Reference Include="com.rlabrecque.steamworks.net">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\com.rlabrecque.steamworks.net.dll</HintPath>
 	  </Reference>
 	  <Reference Include="endel.nativewebsocket">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\endel.nativewebsocket.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Facebook.Wit.Dictation">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Facebook.Wit.Dictation.dll</HintPath>
-	  </Reference>
-	  <Reference Include="FbxBuildTestAssets">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\FbxBuildTestAssets.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Fusion.Common">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Fusion.Common.dll</HintPath>
@@ -69,6 +83,9 @@
 	  <Reference Include="GT_CustomMapSupportRuntime">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\GT_CustomMapSupportRuntime.dll</HintPath>
 	  </Reference>
+	  <Reference Include="HarmonyXInterop">
+	    <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\core\HarmonyXInterop.dll</HintPath>
+	  </Reference>
 	  <Reference Include="KID">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\KID.dll</HintPath>
 	  </Reference>
@@ -90,30 +107,6 @@
 	  <Reference Include="Meta.Voice.Hub.Runtime">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.Voice.Hub.Runtime.dll</HintPath>
 	  </Reference>
-	  <Reference Include="Meta.Voice.Samples.BuiltInTimer">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.Voice.Samples.BuiltInTimer.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Meta.Voice.Samples.Chess">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.Voice.Samples.Chess.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Meta.Voice.Samples.Dictation">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.Voice.Samples.Dictation.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Meta.Voice.Samples.LightTraits">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.Voice.Samples.LightTraits.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Meta.Voice.Samples.LiveUnderstanding">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.Voice.Samples.LiveUnderstanding.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Meta.Voice.Samples.Shapes">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.Voice.Samples.Shapes.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Meta.Voice.Samples.ShapesConduit">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.Voice.Samples.ShapesConduit.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Meta.Voice.Samples.TTSVoices">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.Voice.Samples.TTSVoices.dll</HintPath>
-	  </Reference>
 	  <Reference Include="Meta.VoiceSDK.Mic.Common">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.VoiceSDK.Mic.Common.dll</HintPath>
 	  </Reference>
@@ -122,9 +115,6 @@
 	  </Reference>
 	  <Reference Include="Meta.WitAi">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.WitAi.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Meta.WitAi.Conduit">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.WitAi.Conduit.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Meta.WitAi.Lib">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.WitAi.Lib.dll</HintPath>
@@ -135,26 +125,26 @@
 	  <Reference Include="Meta.XR.BuildingBlocks">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Meta.XR.BuildingBlocks.dll</HintPath>
 	  </Reference>
-	  <Reference Include="Modio.Platform.Steam.Facepunch">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Modio.Platform.Steam.Facepunch.dll</HintPath>
+	  <Reference Include="Mono.Cecil">
+	    <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\core\Mono.Cecil.dll</HintPath>
 	  </Reference>
-	  <Reference Include="Modio.Platform.Steam.Steamworks">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Modio.Platform.Steam.Steamworks.dll</HintPath>
+	  <Reference Include="Mono.Cecil.Mdb">
+	    <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\core\Mono.Cecil.Mdb.dll</HintPath>
 	  </Reference>
-	  <Reference Include="modio.UI">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\modio.UI.dll</HintPath>
+	  <Reference Include="Mono.Cecil.Pdb">
+	    <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\core\Mono.Cecil.Pdb.dll</HintPath>
 	  </Reference>
-	  <Reference Include="Modio.UI.Examples.Steam.Facepunch">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Modio.UI.Examples.Steam.Facepunch.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Modio.UI.Examples.Steam.Steamworks">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Modio.UI.Examples.Steam.Steamworks.dll</HintPath>
-	  </Reference>
-	  <Reference Include="modio.UnityPlugin">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\modio.UnityPlugin.dll</HintPath>
+	  <Reference Include="Mono.Cecil.Rocks">
+	    <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\core\Mono.Cecil.Rocks.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Mono.Security">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Mono.Security.dll</HintPath>
+	  </Reference>
+	  <Reference Include="MonoMod.RuntimeDetour">
+	    <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\core\MonoMod.RuntimeDetour.dll</HintPath>
+	  </Reference>
+	  <Reference Include="MonoMod.Utils">
+	    <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\core\MonoMod.Utils.dll</HintPath>
 	  </Reference>
 	  <Reference Include="NanoSockets">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\NanoSockets.dll</HintPath>
@@ -168,20 +158,8 @@
 	  <Reference Include="Newtonsoft.Json">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Newtonsoft.Json.dll</HintPath>
 	  </Reference>
-	  <Reference Include="Newtonsoft.Json.UnityConverters">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Newtonsoft.Json.UnityConverters.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Newtonsoft.Json.UnityConverters.Addressables">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Newtonsoft.Json.UnityConverters.Addressables.dll</HintPath>
-	  </Reference>
 	  <Reference Include="nexus.nexussdk.Runtime">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\nexus.nexussdk.Runtime.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Nobi.UiRoundedCorners">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Nobi.UiRoundedCorners.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Oculus.AudioManager">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Oculus.AudioManager.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Oculus.Interaction">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Oculus.Interaction.dll</HintPath>
@@ -192,14 +170,8 @@
 	  <Reference Include="Oculus.Interaction.OVR.Samples">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Oculus.Interaction.OVR.Samples.dll</HintPath>
 	  </Reference>
-	  <Reference Include="Oculus.LipSync">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Oculus.LipSync.dll</HintPath>
-	  </Reference>
 	  <Reference Include="Oculus.Platform">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Oculus.Platform.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Oculus.Spatializer">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Oculus.Spatializer.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Oculus.VR">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Oculus.VR.dll</HintPath>
@@ -354,9 +326,6 @@
 	  <Reference Include="Unity.XR.Management">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Unity.XR.Management.dll</HintPath>
 	  </Reference>
-	  <Reference Include="Unity.XR.Oculus">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Unity.XR.Oculus.dll</HintPath>
-	  </Reference>
 	  <Reference Include="Unity.XR.OpenVR">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Unity.XR.OpenVR.dll</HintPath>
 	  </Reference>
@@ -452,9 +421,6 @@
 	  </Reference>
 	  <Reference Include="UnityEngine.PhysicsModule">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
-	  </Reference>
-	  <Reference Include="UnityEngine.ProfilerModule">
-	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.ProfilerModule.dll</HintPath>
 	  </Reference>
 	  <Reference Include="UnityEngine.PropertiesModule">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.PropertiesModule.dll</HintPath>
@@ -572,6 +538,9 @@
 	  </Reference>
 	  <Reference Include="UnityEngine.XRModule">
 	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.XRModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Utilla">
+	    <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\plugins\Utilla.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 
