@@ -13,12 +13,13 @@ namespace ShutUpMonkeys.Behaviours
 
             for (int i = 0; i < lines.Count; i++)
             {
-                var l = lines[i];
+                var line = lines[i];
+                var isMuted = Plugin.IsLobbyMuted;
 
-                if (l.linePlayer.UserId == p.UserId)
+                if (line.linePlayer.UserId == p.UserId)
                 {
-                    l.muteButton.isOn = Plugin.IsLobbyMuted;
-                    l.PressButton(Plugin.IsLobbyMuted, GorillaPlayerLineButton.ButtonType.Mute);
+                    line.muteButton.isOn = isMuted;
+                    line.PressButton(isMuted, GorillaPlayerLineButton.ButtonType.Mute);
                     return;
                 }
             }

@@ -1,19 +1,21 @@
 ﻿using BepInEx;
 using GorillaNetworking;
 using HarmonyLib;
+using PlayFab;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
 namespace ShutUpMonkeys
 {
-    [BepInPlugin("com.cody.shutupmonkeys", "ShutUpMonkeys", "2.1.0")]
+    [BepInPlugin("com.cody.shutupmonkeys", "ShutUpMonkeys", "2.2.0")]
     public class Plugin : BaseUnityPlugin
     {
-        public static bool IsLobbyMuted, isInit;
-        public static GameObject MuteButton;
+        public static bool IsLobbyMuted;
         public static TextMeshPro buttonText;
 
         public static bool isOK =>
+            NetworkSystem.Instance.InRoom &&
             GorillaComputer.instance.currentState != GorillaComputer.ComputerState.Color &&
             GorillaComputer.instance.currentState != GorillaComputer.ComputerState.Mic &&
             GorillaComputer.instance.currentState != GorillaComputer.ComputerState.Turn &&
@@ -24,27 +26,45 @@ namespace ShutUpMonkeys
             var harmony = new Harmony("com.cody.shutupmonkeys");
             harmony.PatchAll();
 
-            GorillaTagger.OnPlayerSpawned(OnGameInit);
+            NetworkSystem.Instance.OnJoinedRoomEvent += RefreshText;
+            NetworkSystem.Instance.OnReturnedToSinglePlayer += RefreshText;
+
+            StartCoroutine(WaitForPlayFab());
         }
 
-        private void OnGameInit()
+        // BEFORE YOU FLAME ME FOR THIS..... GorillaTagger.OnPlayerSpawned didnt work for this :/
+        // so im using this 
+        private IEnumerator WaitForPlayFab()
         {
-            string TreeRoom = "Environment Objects/LocalObjects_Prefab/TreeRoom";
-            MuteButton = GameObject.Find($"{TreeRoom}/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/option 3/");
-            buttonText = GameObject.Find($"{TreeRoom}/TreeRoom/option3/").GetComponent<TextMeshPro>();
-            isInit = true;
+            float time = 5f;
+            float current = 0f;
+
+            while (!PlayFabClientAPI.IsClientLoggedIn())
+            {
+                if (current >= time)
+                    yield break;
+
+                current += Time.deltaTime;
+                yield return null;
+            }
+
+            OnGameInit();
         }
+
+        public static void OnGameInit() => buttonText = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/option3").GetComponent<TextMeshPro>();
+
+        public static void RefreshText() => buttonText.text = isOK ? IsLobbyMuted ? "MUTED" : "UNMUTED" : "OPTION 3";
 
         public static void MaybeMuteEveryone()
         {
+            if (!NetworkSystem.Instance.InRoom) return;
+
             foreach (var l in GorillaScoreboardTotalUpdater.allScoreboardLines)
             {
                 l.muteButton.isOn = IsLobbyMuted;
                 l.PressButton(IsLobbyMuted, GorillaPlayerLineButton.ButtonType.Mute);
-                ChangeText(isOK ? IsLobbyMuted ? "MUTED" : "UNMUTED" : "OPTION 3");
+                RefreshText();
             }
         }
-
-        public static void ChangeText(string txt) => buttonText.text = txt;
     }
 }

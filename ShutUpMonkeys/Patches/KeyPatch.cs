@@ -8,7 +8,7 @@ namespace ShutUpMonkeys
     {
         static void Postfix(GorillaKeyboardButton __instance)
         {
-            if (!Plugin.isInit || !Plugin.isOK || __instance.Binding != GorillaKeyboardBindings.option3) return;
+            if (__instance.Binding != GorillaKeyboardBindings.option3 || !Plugin.isOK) return;
 
             Plugin.IsLobbyMuted = !Plugin.IsLobbyMuted;
             Plugin.MaybeMuteEveryone();
